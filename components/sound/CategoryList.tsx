@@ -11,29 +11,34 @@ export default function CategoryList({ categories }: CategoryListProps) {
   const router = useRouter();
 
   const handleCategoryPress = (category: Category) => {
-    // Navigate to category screen (not implemented in this MVP)
-    // router.push(`/category/${category.id}`);
+    // Navigate to category screen (could be implemented as a search filter)
+    router.push(`/search?category=${category.id}`);
   };
+
+  const renderCategoryItem = ({ item }: { item: Category }) => (
+    <TouchableOpacity 
+      style={styles.categoryCard}
+      onPress={() => handleCategoryPress(item)}
+    >
+      <Image 
+        source={{ uri: item.imageUrl }}
+        style={styles.categoryImage}
+        resizeMode="cover"
+      />
+      <View style={styles.overlay}>
+        <Text style={styles.categoryName}>{item.name}</Text>
+        {item.soundCount && (
+          <Text style={styles.soundCount}>{item.soundCount} sounds</Text>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <FlatList
       data={categories}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <TouchableOpacity 
-          style={styles.categoryCard}
-          onPress={() => handleCategoryPress(item)}
-        >
-          <Image 
-            source={{ uri: item.imageUrl }}
-            style={styles.categoryImage}
-            resizeMode="cover"
-          />
-          <View style={styles.overlay}>
-            <Text style={styles.categoryName}>{item.name}</Text>
-          </View>
-        </TouchableOpacity>
-      )}
+      renderItem={renderCategoryItem}
       horizontal
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.container}
@@ -63,10 +68,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.4)',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 8,
   },
   categoryName: {
     color: Colors.white,
     fontFamily: 'Inter-Bold',
     fontSize: 16,
+    textAlign: 'center',
+  },
+  soundCount: {
+    color: Colors.lightGray,
+    fontFamily: 'Inter-Regular',
+    fontSize: 12,
+    marginTop: 2,
   },
 });
