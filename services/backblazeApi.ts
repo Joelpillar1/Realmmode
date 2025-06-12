@@ -1,4 +1,4 @@
-const BACKBLAZE_API_KEY = '0053c16b8e88b1883b556f7673627503f8a35e168d';
+const BACKBLAZE_API_KEY = 'K005Xg14QfPu15xFy3b18NjcDDRgWFc';
 const BACKBLAZE_BUCKET_ID = 'tree-iad1-0000'; // This might need to be adjusted based on your actual bucket ID
 
 interface B2AuthResponse {
