@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { backblazeService, B2FileInfo } from './backblazeApi';
 import { Sound, Category } from '@/types/sound';
 
@@ -83,6 +84,13 @@ class SoundService {
   }
 
   async loadSounds(): Promise<void> {
+    // Use mock data on web platform to avoid CORS issues
+    if (Platform.OS === 'web') {
+      console.log('Loading mock sounds for web platform...');
+      this.loadMockData();
+      return;
+    }
+
     try {
       console.log('Loading sounds from Backblaze...');
       const files = await backblazeService.listFiles();
